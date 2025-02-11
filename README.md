@@ -11,9 +11,13 @@ This repository showcases the entries into the 2025 Dubois Data Visualization Ch
 
 ![Value of land owned by African-Americans in Georgia](challenge01/original-plate-18.jpeg)
 
-![Value of land owned by African-Americans in Georgia](challenge01/01viz/challenge02_djk.png)
+![Value of land owned by African-Americans in Georgia](challenge01/01viz/challenge01_djk.png)
 
 ### Week 2
+
+![Acres of land owned by African-Americans in Georgia](challenge02/original-plate-19.jpeg)
+
+![Acres of land owned by African-Americans in Georgia](challenge02/02viz/challenge02_djk.png)
 
 
 
