@@ -5,6 +5,8 @@ This repository showcases the entries into the 2025 Dubois Data Visualization Ch
 
 [2025 Dubois Data Visualization Challenge](https://dkillian.github.io/Dubois%20Visualization%20Challenge%202025%20-%20Dan%20Killian.html)
 
+[test](https://dkillian.github.io/Dubois%20Visualization%20Challenge%202025%20-%20Dan%20Killian.html)
+
 ## Visualizations only
 
 ### Week 1
