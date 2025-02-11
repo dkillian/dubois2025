@@ -1,0 +1,120 @@
+---
+title: "Dubois Visualization Challenge 2025"
+toc: true
+number-sections: false
+format: 
+  html:
+    code-fold: true
+editor: visual
+---
+
+```{r global_options, include=F, warning=F, message=F, echo=F, error=F}
+# standard figure size and generate clean output
+knitr::opts_chunk$set(autodep=T, fig.height=6, fig.width=8, warning=FALSE, message=FALSE, cache=TRUE, error=T, echo=T)
+library(here)
+source("prep.R")
+```
+
+### Week 1
+
+![Value of land owned by African-Americans in Georgia](challenge01/original-plate-18.jpeg)
+
+```{r}
+# d1 <- read_csv("challenge01/data.csv") %>%
+#   set_names(nm=c("year", "value")) %>%
+#   set_labels(labels=c("Year","Land Value (Dollars)"),
+#                       force.labels=T) %>%
+#   as.tibble() %>%
+#   mutate(ln_val=log(value),
+#          scale=sqrt(ln_val))
+# 
+# write_csv(d1, "challenge01/challenge01.csv")
+
+d1 <- read_csv("challenge01/challenge01.csv")
+
+d1_flx <- d1 %>%
+  flextable() %>%
+  colformat_num(j="year", big.mark="")
+
+d1_flx
+
+```
+
+
+```{r}
+ggplot(d1, aes(year, value)) + 
+  geom_line(color=usaid_blue,
+            size=1,
+            alpha=.7) +
+  geom_point(color=usaid_blue,
+             size=3) + 
+  scale_y_continuous(label=dollar_format(scale=.000001, suffix="M"),
+                     sec.axis=dup_axis()) + 
+  labs(x="",
+       y="",
+       title="Value of land owned by African-Americans in Georgia",
+       caption="Dan Killian\nchallenge 1")
+
+# save the ggplot
+ggsave(here("challenge01/01viz/challenge01_djk.png"),
+       device="png",
+       type="cairo",
+       height=5,
+       width=8)
+```
+
+
+### Week 2
+
+![Acres of land owned by African-Americans in Georgia](challenge02/original-plate-19.jpeg)
+
+```{r}
+d2 <- read_csv("challenge02/data.csv") %>%
+  set_names(nm=c("year", "acres")) %>%
+  set_labels(labels=c("Year","Land Owned (acres)"),
+                      force.labels=T) %>%
+  as.tibble() %>%
+  mutate(ln_acre=log(acres),
+         scale=sqrt(ln_acre))
+
+write_csv(d2, "challenge02/challenge02.csv")
+
+d2 <- read_csv("challenge02/challenge02.csv")
+
+d2_flx <- d2 %>%
+  flextable() %>%
+  colformat_num(j="year", big.mark="")
+
+d2_flx
+
+```
+
+
+```{r}
+ggplot(d2, aes(year, acres)) + 
+  #geom_line(color=usaid_blue,
+  #          size=1,
+  #          alpha=.7) +
+  stat_smooth(color=usaid_blue,
+              alpha=.8) +
+  geom_point(color=usaid_blue,
+             size=1.8,
+             alpha=.6) + 
+  scale_x_continuous(breaks=seq(1875, 1900, 5)) +
+  scale_y_continuous(breaks=seq(3e5, 1e6, 1e5),
+                     labels=label_comma(scale=.001,
+                                        suffix="K"),
+                     sec.axis=dup_axis()) + 
+  labs(x="",
+       y="",
+       title="Acres of land owned by African-Americans in Georgia",
+       caption="Dan Killian\nchallenge 2")
+
+# save the ggplot
+ggsave(here("challenge02/02viz/challenge02_djk.png"),
+       device="png",
+       type="cairo",
+       height=5,
+       width=8)
+```
+
