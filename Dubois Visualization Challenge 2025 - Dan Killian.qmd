@@ -20,15 +20,6 @@ source("prep.R")
 ![Value of land owned by African-Americans in Georgia](challenge01/original-plate-18.jpeg)
 
 ```{r}
-# d1 <- read_csv("challenge01/data.csv") %>%
-#   set_names(nm=c("year", "value")) %>%
-#   set_labels(labels=c("Year","Land Value (Dollars)"),
-#                       force.labels=T) %>%
-#   as.tibble() %>%
-#   mutate(ln_val=log(value),
-#          scale=sqrt(ln_val))
-# 
-# write_csv(d1, "challenge01/challenge01.csv")
 
 d1 <- read_csv("challenge01/challenge01.csv")
 
@@ -69,15 +60,7 @@ ggsave(here("challenge01/01viz/challenge01_djk.png"),
 ![Acres of land owned by African-Americans in Georgia](challenge02/original-plate-19.jpeg)
 
 ```{r}
-d2 <- read_csv("challenge02/data.csv") %>%
-  set_names(nm=c("year", "acres")) %>%
-  set_labels(labels=c("Year","Land Owned (acres)"),
-                      force.labels=T) %>%
-  as.tibble() %>%
-  mutate(ln_acre=log(acres),
-         scale=sqrt(ln_acre))
 
-write_csv(d2, "challenge02/challenge02.csv")
 
 d2 <- read_csv("challenge02/challenge02.csv")
 
@@ -116,5 +99,64 @@ ggsave(here("challenge02/02viz/challenge02_djk.png"),
        type="cairo",
        height=5,
        width=8)
+```
+
+# Week 3
+
+![Acres of land owned by African-Americans in Georgia, by county](challenge03/original-plate-20.jpg)
+
+```{r}
+
+# d3 <- read_csv("challenge03/data.csv") %>%
+#   set_names(nm=c("county","acres")) %>%
+#   set_labels(labels=c("Year","Land Owned (acres)")) 
+# 
+# library(wesanderson)
+# col <- wes_palette("AsteroidCity2")
+# 
+# d3 <- d3 %>%
+#   mutate(rank=7 - ntile(acres, 6),
+#          color=case_when(rank==1 ~ col[1],
+#                          rank==2 ~ col[2],
+#                          rank==3 ~ col[3],
+#                          rank==4 ~ col[4],
+#                          rank==5 ~ col[5],
+#                          rank==6 ~ col[6],
+#                          TRUE ~ NA_character_))
+# 
+# d3
+# 
+# write_csv(d3, "challenge03/challenge03.csv")
+
+d3 <- read_csv("challenge03/challenge03.csv")
+
+d3_flx <- d3 %>%
+  arrange(desc(acres)) %>%
+  head(10) %>%
+  flextable() 
+
+d3_flx
+```
+
+```{r}
+
+ggplot(d3, aes(acres, fct_reorder(county, acres), fill=color)) + 
+  geom_col(alpha=.5,
+           show.legend=F) +
+  scale_x_continuous(#limits=c(0,45e3),
+                     #breaks=seq(0,45e3,5e3),
+                     labels=label_number(scale=.001, suffix="K")) + 
+  facet_wrap(~rank,
+             scales=c("free")) +
+  faceted +
+  labs(y="",
+       title="African-American land ownership in Georgia 1899, by county")
+
+# ggsave("challenge03/03viz/challenge03 - Dan Killian.png",
+#        device="png",
+#        type="cairo",
+#        height=7,
+#        width=7)
+
 ```
 
